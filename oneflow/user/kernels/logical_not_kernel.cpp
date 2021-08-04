@@ -1,14 +1,14 @@
-nclude "oneflow/core/framework/framework.h"
+#include "oneflow/core/framework/framework.h"
 
 namespace oneflow {
 
 namespace {
 
 template <typename T>
-void Logical_not(DeviceCtx *ctx, const int64_t n, const T *x, const T *y) {
+void Logical_not(DeviceCtx *ctx, const int64_t n, const T *x, T *y) {
   for (int64_t i = 0; i != n; ++i) {
     if((x[i]==true)||(x[i]!=0)){
-      y[i]=std::false;
+      y[i]=false;
     }else if((x[i]==false)||x[i]==0){
       y[i]=true;
     }
@@ -28,7 +28,7 @@ private:
     Logical_not<T>(ctx->device_ctx(),
            in_tensor->shape().elem_cnt(),
            in_tensor->dptr<T>(),
-           out_tensor->mut_dptr<bool>());
+           out_tensor->mut_dptr<T>());
   }
   bool AlwaysComputeWhenAllOutputsEmpty() const override { return false; }
 };
@@ -41,8 +41,8 @@ private:
           (user_op::HobDataType("out", 0)            \
             == GetDataType<dtype>::value));
 
-REGISTER_RELU_KERNEL(DeviceType::kCPU, bool)
-REGISTER_RELU_KERNEL(DeviceType::kGPU, bool)
+REGISTER_RELU_KERNEL(DeviceType::kCPU, int8_t)
+REGISTER_RELU_KERNEL(DeviceType::kGPU, int8_t)
 } // namespace
 
 } // namespace oneflow
