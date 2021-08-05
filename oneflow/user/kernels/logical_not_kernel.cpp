@@ -5,27 +5,23 @@ namespace oneflow {
 namespace {
 
 template <typename T>
-void Logical_not(DeviceCtx *ctx, const int64_t n, const T *x, T *y) {
+void LogicalNot(DeviceCtx *ctx, const int64_t n, const T *x, T *y) {
   for (int64_t i = 0; i != n; ++i) {
-    if((x[i]==true)||(x[i]!=0)){
-      y[i]=false;
-    }else if((x[i]==false)||x[i]==0){
-      y[i]=true;
-    }
+    y[i] = !static_cast<bool>(x[i]);
   }
 }
 
 template <DeviceType device_type, typename T>
-class Logical_not_Kernel final : public user_op::OpKernel {
+class LogicalNotKernel final : public user_op::OpKernel {
 public:
-  Logical_not_Kernel() = default;
-  ~Logical_not_Kernel() = default;
+  LogicalNotKernel() = default;
+  ~LogicalNotKernel() = default;
 
 private:
   void Compute(user_op::KernelComputeContext *ctx) const override {
     const user_op::Tensor *in_tensor = ctx->Tensor4ArgNameAndIndex("in", 0);
     user_op::Tensor *out_tensor = ctx->Tensor4ArgNameAndIndex("out", 0);
-    Logical_not<T>(ctx->device_ctx(),
+    LogicalNot<T>(ctx->device_ctx(),
            in_tensor->shape().elem_cnt(),
            in_tensor->dptr<T>(),
            out_tensor->mut_dptr<T>());

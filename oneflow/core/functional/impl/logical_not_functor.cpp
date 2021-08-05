@@ -16,9 +16,9 @@ namespace functional {
 
 namespace impl {
 
-class Logical_not_Functor {
+class LogicalNotFunctor {
  public:
-  Logical_not_Functor() { op_ = CHECK_JUST(one::OpBuilder("logical_not").Input("in").Output("out").Build()); }
+  LogicalNotFunctor() { op_ = CHECK_JUST(one::OpBuilder("logical_not").Input("in").Output("out").Build()); }
   Maybe<Tensor> operator()(const std::shared_ptr<one::Tensor>& x, const DataType& dtype) const {
     MutableAttrMap attrs;
     JUST(attrs.SetAttr<DataType>("dtype", dtype));
