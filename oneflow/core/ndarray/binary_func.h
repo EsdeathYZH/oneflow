@@ -29,7 +29,7 @@ limitations under the License.
 namespace oneflow {
 
 #define ARITHMETIC_BINARY_FUNC_NAME_SEQ (Add)(Sub)(Mul)(Div)(Min)(Max)(FloorMod)(FMod)
-#define LOGICAL_BINARY_FUNC_NAME_SEQ (EQ)(NE)(GT)(GE)(LT)(LE)(AND)(OR)
+#define LOGICAL_BINARY_FUNC_NAME_SEQ (EQ)(NE)(GT)(GE)(LT)(LE)(AND)(OR)(NOT)
 
 #define PREPEND_PREFIX_BINARY_FUNC(name) OF_PP_CAT(BinaryFunc, name)
 #define ARITHMETIC_BINARY_FUNC_SEQ \
@@ -176,6 +176,11 @@ struct BinaryFuncAND final {
 template<typename T>
 struct BinaryFuncOR final {
   static OF_DEVICE_FUNC const int8_t Invoke(const T x, const T y) { return x || y; }
+};
+
+template<typename T>
+struct BinaryFuncNOT final {
+  static OF_DEVICE_FUNC const int8_t Invoke(const T x) { return !x; }
 };
 
 template<typename T>

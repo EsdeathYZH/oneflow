@@ -21,6 +21,7 @@ oneflow
             in_top_k, 
             logical_and,
             logical_or,
+            logical_not,
             load, 
             masked_fill, 
             matmul, 
