@@ -29,12 +29,12 @@ private:
   bool AlwaysComputeWhenAllOutputsEmpty() const override { return false; }
 };
 
-#define REGISTER_RELU_KERNEL(device, dtype)          \
+#define REGISTER_RELU_KERNEL(device, dtype)               \
   REGISTER_USER_KERNEL("logical_not")                     \
-      .SetCreateFn<Logical_not_Kernel<device, dtype>>()      \
-      .SetIsMatchedHob(                              \
-          (user_op::HobDeviceTag() == device) &     \
-          (user_op::HobDataType("out", 0)            \
+      .SetCreateFn<LogicalNotKernel<device, dtype>>()     \
+      .SetIsMatchedHob(                                   \
+          (user_op::HobDeviceTag() == device) &           \
+          (user_op::HobDataType("out", 0)                 \
             == GetDataType<dtype>::value));
 
 REGISTER_RELU_KERNEL(DeviceType::kCPU, int8_t)
