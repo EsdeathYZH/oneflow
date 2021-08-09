@@ -33,7 +33,7 @@ class LogicalNotFunctor {
 }  // namespace impl
 
 ONEFLOW_FUNCTION_LIBRARY(m) {
-  m.add_functor<impl::Logical_not_Functor>("LogicalNot");
+  m.add_functor<impl::LogicalNotFunctor>("LogicalNot");
   
 };
 
